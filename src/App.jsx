@@ -52,7 +52,7 @@ const medications = [
     prescriptions: [],
   },
   {
-    activePrinciple: "Ácido Alendrônico",
+    activePrinciple: "Ácido Alendrónico",
     strength: "70 mg",
     form: "Comprimidos",
     prescriptions: [],
