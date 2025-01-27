@@ -177,9 +177,9 @@ const MedicationDashboard = () => {
                               </div>
                             )}
                             <div className="flex gap-2 mt-4">
-                              <Button variant="outline">Validar</Button>
-                              <Button variant="outline">Alertar Prescritor</Button>
-                              <Button  variant="outline" onClick={() => navigation.navigate("#/incident-report")}>Registrar Incidente</Button>                    
+                              <Button variant="outline">Manter</Button>
+                              <Button variant="outline">Alertar Médico</Button>
+                              <Button  variant="outline" onClick={() => navigation.navigate("#/incident-report")}>Registar Discrepância</Button>                    
 
                               <Button variant="outline">Reação Adversa</Button>
                             </div>

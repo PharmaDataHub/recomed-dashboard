@@ -35,8 +35,15 @@ const IncidentReport = () => {
     setNotes(e.target.value);
   };
 
+  const handleConfirm = () => {
+    // Handle confirm action
+    console.log("Razão:", reason);
+    console.log("Notas:", notes);
+    alert("Incidente registrado com sucesso!");
+  };
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 min-h-screen flex flex-col justify-between">
       <Card>
         <CardHeader>
           <h2 className="text-2xl font-bold text-gray-800">
@@ -83,7 +90,11 @@ const IncidentReport = () => {
             ></textarea>
           </div>
         </CardContent>
+        <div className="mt-6 flex justify-end">
+        <Button onClick={handleConfirm}>Confirmar</Button>
+      </div>
       </Card>
+ 
     </div>
   );
 };
