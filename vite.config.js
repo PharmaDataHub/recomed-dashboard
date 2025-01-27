@@ -6,4 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(),    tailwindcss(),
   ],
+  base: '/recomed-dashboard/', // Replace <your-repository-name> with your GitHub repository name
+
 })
