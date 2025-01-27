@@ -66,7 +66,7 @@ const medications = [
     prescriptions: [],
   },
   {
-    activePrinciple: "Ácido Alendrônico",
+    activePrinciple: "Ácido Alendrónico",
     strength: "70 mg",
     form: "Comprimidos",
     dosage: "1 comprimido por semana",
@@ -179,7 +179,7 @@ const MedicationDashboard = () => {
                             <div className="flex gap-2 mt-4">
                               <Button variant="outline">Validar</Button>
                               <Button variant="outline">Alertar Prescritor</Button>
-                              <Button  variant="outline" onClick={() => navigation.navigate("incident-report")}>Registrar Incidente</Button>                    
+                              <Button  variant="outline" onClick={() => navigation.navigate("#/incident-report")}>Registrar Incidente</Button>                    
 
                               <Button variant="outline">Reação Adversa</Button>
                             </div>
