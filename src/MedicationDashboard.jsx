@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Card = ({ children }) => (
   <div className="border rounded-lg shadow-md p-4 bg-white hover:shadow-lg transition-shadow duration-200">
@@ -20,7 +19,6 @@ const Button = ({ children, variant, ...props }) => (
     {children}
   </button>
 );
-import IncidentReport from "./IncidentReport"; // Import the new page
 
 
 const medications = [
@@ -86,6 +84,9 @@ const medications = [
 const MedicationDashboard = () => {
   const [selectedMedication, setSelectedMedication] = useState(null);
   const [selectedPrescription, setSelectedPrescription] = useState(null);
+  const [sortBy, setSortBy] = useState("startDate");
+
+  const sortedMedications = [...medications].sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
 
   const toggleMedicationDetails = (medication) => {
     if (selectedMedication?.activePrinciple === medication.activePrinciple) {
@@ -99,22 +100,38 @@ const MedicationDashboard = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <Card>
+      <Card className="mb-6">
         <CardHeader>
           <h2 className="text-2xl font-bold text-gray-800">
             Marie Curie | 68 anos | Hipertensão arterial, Osteoartrite, Diabetes tipo 2
           </h2>
         </CardHeader>
         <CardContent>
-          <div className="flex justify-between items-center mb-6">
-            <Button variant="outline">Ficha doente</Button>
-            <select className="border border-gray-300 p-2 rounded-lg">
-              <option>Ordenar por Grupo Terapêutico</option>
-              <option>Ordenar por Nome</option>
-            </select>
+        <div className="flex justify-between items-center mb-6">
+        <Button variant="outline">Ficha doente</Button>
+        <div className="flex gap-4 ml-auto">
+
+            <select
+            className="border border-gray-300 p-2 rounded-lg" 
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="startDate" >Ordenar por Data</option>
+            <option value="activePrinciple">Ordenar por Nome</option>
+          </select>
+          <select
+            className="border border-gray-300 p-2 rounded-lg"           >
+            <option value="activePrinciple" >Agrupar por princípio Ativo </option>
+            <option value="prescriber">Agrupar por prescritor</option>
+            <option value="therapeuticGroup">Agrupar por Grupo Terapêutico</option>
+
+          </select>
           </div>
+
+          </div>
+
+
           <ul>
-            {medications.map((medication, index) => (
+            {sortedMedications.map((medication, index) => (
               <li key={index} className="mb-6">
                 <div
                   className="p-6 border rounded-lg bg-white shadow hover:shadow-lg transition-shadow duration-200 cursor-pointer"
