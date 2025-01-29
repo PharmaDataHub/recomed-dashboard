@@ -9,11 +9,10 @@ const CardContent = ({ children }) => <div className="p-2">{children}</div>;
 const CardHeader = ({ children }) => <div className="font-bold text-xl mb-4 text-gray-800">{children}</div>;
 const Button = ({ children, variant, ...props }) => (
   <button
-    className={`${
-      variant === "outline"
+    className={`${variant === "outline"
         ? "border border-blue-500 text-blue-500 bg-white hover:bg-blue-100"
         : "bg-blue-500 text-white hover:bg-blue-600"
-    } px-4 py-2 rounded-lg transition-all duration-200`}
+      } px-4 py-2 rounded-lg transition-all duration-200`}
     {...props}
   >
     {children}
@@ -27,7 +26,7 @@ const medications = [
     strength: "20 mg",
     form: "Comprimidos",
     dosage: "1 comprimido por dia",
-    startDate: "01/01/2023",
+    startDate: "07/08/2020",
     prescriptions: [
       {
         brandName: "Lisinopril Aurovitas",
@@ -60,24 +59,57 @@ const medications = [
     strength: "50 mg",
     form: "Comprimidos",
     dosage: "2 comprimidos por dia",
-    startDate: "15/06/2022",
-    prescriptions: [],
+    startDate: "07/12/2020",
+    prescriptions: [ {
+      brandName: "Diclofenac",
+      prescriber: {
+        name: "Dr. Harry Potter",
+        specialty: "Reumatologia",
+        date: "19/12/2023",
+      },
+      dispenses: [
+        { date: "19/12/2023", details: "Diclofenac 50 mg 60 unidades" },
+      ],
+    },],
   },
   {
     activePrinciple: "Ácido Alendrónico",
     strength: "70 mg",
     form: "Comprimidos",
     dosage: "1 comprimido por semana",
-    startDate: "10/03/2023",
-    prescriptions: [],
+    startDate: "14/10/2022",
+    prescriptions: [ {
+      brandName: "Ácido Alendrónico",
+      prescriber: {
+        name: "Dr. Minerva McGonagall",
+        specialty: "Endocrinologista",
+        date: "19/12/2023",
+      },
+      dispenses: [
+        { date: "19/12/2023", details: "Fosamax 70 mg 4 unidades" },
+        { date: "19/12/2023", details: "Fosamax 70 mg 4 unidades" },
+        { date: "19/12/2023", details: "Fosamax 70 mg 4 unidades" },
+
+      ],
+    },],
   },
   {
     activePrinciple: "Ertugliflozina + Metformina",
-    strength: "2.5 mg + 850 mg",
+    strength: "2.5 mg + 1000 mg",
     form: "Comprimidos",
     dosage: "1 comprimido por dia",
-    startDate: "25/08/2023",
-    prescriptions: [],
+    startDate: "07/08/2024",
+    prescriptions: [ {
+      brandName: "Ertugliflozina + Metformina",
+      prescriber: {
+        name: "Dr. Severus Snape",
+        specialty: "MGF",
+        date: "19/12/2023",
+      },
+      dispenses: [
+        { date: "19/12/2023", details: "Segluromet 2.5 mg + 1000 mg 56 unidades" },
+      ],
+    },],
   },
 ];
 
@@ -86,8 +118,12 @@ const MedicationDashboard = () => {
   const [selectedPrescription, setSelectedPrescription] = useState(null);
   const [sortBy, setSortBy] = useState("startDate");
 
-  const sortedMedications = [...medications].sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
-
+  const sortedMedications = [...medications].sort((a, b) => {
+    if (sortBy === "startDate") {
+      return new Date(a.startDate.split("/").reverse().join("-")) - new Date(b.startDate.split("/").reverse().join("-"));
+    }
+    return a[sortBy].localeCompare(b[sortBy]);
+  });
   const toggleMedicationDetails = (medication) => {
     if (selectedMedication?.activePrinciple === medication.activePrinciple) {
       setSelectedMedication(null);
@@ -107,25 +143,25 @@ const MedicationDashboard = () => {
           </h2>
         </CardHeader>
         <CardContent>
-        <div className="flex justify-between items-center mb-6">
-        <Button variant="outline">Ficha doente</Button>
-        <div className="flex gap-4 ml-auto">
+          <div className="flex justify-between items-center mb-6">
+            <Button variant="outline">Ficha doente</Button>
+            <div className="flex gap-4 ml-auto">
 
-            <select
-            className="border border-gray-300 p-2 rounded-lg" 
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="startDate" >Ordenar por Data</option>
-            <option value="activePrinciple">Ordenar por Nome</option>
-          </select>
-          <select
-            className="border border-gray-300 p-2 rounded-lg"           >
-            <option value="activePrinciple" >Agrupar por princípio Ativo </option>
-            <option value="prescriber">Agrupar por prescritor</option>
-            <option value="therapeuticGroup">Agrupar por Grupo Terapêutico</option>
+              <select
+                className="border border-gray-300 p-2 rounded-lg"
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="startDate" >Ordenar por Data</option>
+                <option value="activePrinciple">Ordenar por Nome</option>
+              </select>
+              <select
+                className="border border-gray-300 p-2 rounded-lg"           >
+                <option value="activePrinciple" >Agrupar por princípio Ativo </option>
+                <option value="prescriber">Agrupar por prescritor</option>
+                <option value="therapeuticGroup">Agrupar por Grupo Terapêutico</option>
 
-          </select>
-          </div>
+              </select>
+            </div>
 
           </div>
 
@@ -149,7 +185,7 @@ const MedicationDashboard = () => {
                     </div>
                   </div>
                   <div className="mt-4 text-right">
-                    <Button className="bg-blue-500 text-white hover:bg-blue-600"   onClick={() => window.open("https://www.drugs.com/lisinopril.html", "_blank")}>Link Externo</Button>
+                    <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => window.open("https://www.drugs.com/lisinopril.html", "_blank")}>Link Externo</Button>
                   </div>
                 </div>
                 {selectedMedication?.activePrinciple === medication.activePrinciple && (
@@ -196,7 +232,7 @@ const MedicationDashboard = () => {
                             <div className="flex gap-2 mt-4">
                               <Button variant="outline">Manter</Button>
                               <Button variant="outline">Alertar Médico</Button>
-                              <Button  variant="outline" onClick={() => navigation.navigate("#/incident-report")}>Registar Discrepância</Button>                    
+                              <Button variant="outline" onClick={() => navigation.navigate("#/incident-report")}>Registar Discrepância</Button>
 
                               <Button variant="outline">Reação Adversa</Button>
                             </div>
