@@ -26,6 +26,7 @@ const IncidentReport = () => {
   const navigate = useNavigate();
   const [reason, setReason] = useState("Duplicação");
   const [notes, setNotes] = useState("");
+  const [actiontaken, setaction] = useState("");
 
   const handleReasonChange = (e) => {
     setReason(e.target.value);
@@ -77,6 +78,25 @@ const IncidentReport = () => {
             </select>
           </div>
           <div className="mt-6">
+            <label className="block text-gray-800 font-semibold mb-2" htmlFor="actiontaken">
+              Acção
+            </label>
+            <select
+              id="actiontaken"
+              value={actiontaken}
+              onChange={handleReasonChange}
+              className="border border-gray-300 rounded-lg p-2 w-full"
+            >
+              <option>Comunicação médico telefone</option>
+              <option>Comunicação médico email</option>
+              <option>Comunicação médico</option>
+              <option>suspensão(?)</option>
+              <option>Comunicação doente</option>
+
+              <option>Outros(?)</option>
+            </select>
+          </div>
+          <div className="mt-6">
             <label className="block text-gray-800 font-semibold mb-2" htmlFor="notes">
               Notas
             </label>
@@ -89,6 +109,7 @@ const IncidentReport = () => {
               placeholder="Adicione notas aqui..."
             ></textarea>
           </div>
+          
         </CardContent>
         <div className="mt-6 flex justify-end">
         <Button onClick={handleConfirm}>Confirmar</Button>
